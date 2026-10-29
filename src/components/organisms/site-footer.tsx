@@ -1,6 +1,5 @@
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { SITE } from '@/config/site';
@@ -13,9 +12,9 @@ export function SiteFooter() {
           <Typography variant="body2" color="text.secondary">
             © {SITE.author} · {SITE.name}
           </Typography>
-          <Link href={SITE.github} variant="body2" color="text.secondary" underline="hover">
-            GitHub
-          </Link>
+          <Typography variant="body2" color="primary" sx={{ fontWeight: 700 }}>
+            {SITE.slogan}
+          </Typography>
         </Stack>
       </Container>
     </Box>

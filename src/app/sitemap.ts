@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { NAV, SITE } from '@/config/site';
-import { getAllGuides, getAllRaces } from '@/lib/content';
+import { getAllExercises, getAllGuides, getAllRaces } from '@/lib/content';
 
 export const dynamic = 'force-static';
 
@@ -11,5 +11,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     lastModified: r.date,
   }));
   const guides = getAllGuides().map(g => ({ url: `${SITE.url}/guides/${g.slug}/` }));
-  return [...fixed, ...races, ...guides];
+  const exercises = getAllExercises().map(e => ({ url: `${SITE.url}/exercises/${e.slug}/` }));
+  return [...fixed, ...races, ...guides, ...exercises];
 }

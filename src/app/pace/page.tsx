@@ -49,8 +49,9 @@ export default function PacePage() {
           id="split-heading"
           title={`4:00:00 匀速分段（${formatPace(paceFromTime(SITE.goalSeconds))}/km）`}
         />
-        <TableContainer>
-          <Table size="small" sx={{ minWidth: 560, fontVariantNumeric: 'tabular-nums' }}>
+        {/* 10 地点を横に並べるとスマホでは収まらないため、md 未満は縦の表にする */}
+        <TableContainer sx={{ display: { xs: 'none', md: 'block' } }}>
+          <Table size="small" sx={{ fontVariantNumeric: 'tabular-nums' }}>
             <TableHead>
               <TableRow>
                 {splits.map(s => (
@@ -71,6 +72,27 @@ export default function PacePage() {
             </TableBody>
           </Table>
         </TableContainer>
+        <Table
+          size="small"
+          sx={{ display: { xs: 'table', md: 'none' }, fontVariantNumeric: 'tabular-nums' }}
+        >
+          <TableHead>
+            <TableRow>
+              <TableCell>地点</TableCell>
+              <TableCell align="right">通过时间</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {splits.map(s => (
+              <TableRow key={s.km}>
+                <TableCell>{pointLabel(s.km)}</TableCell>
+                <TableCell align="right" sx={{ fontWeight: 700 }}>
+                  {formatDuration(s.elapsed)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
         <Typography variant="caption" color="text.secondary" component="p" sx={{ mt: 1 }}>
           实际比赛中 GPS 距离通常会多出 0.5〜1%，建议按比表中快 3〜5 秒/km 的配速来跑。
         </Typography>

@@ -9,12 +9,14 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
 import html from 'remark-html';
+import { isCategory, type ExerciseSummary } from './exercises';
 import type { RaceDistance, RaceSummary } from './races';
 import { parseDuration } from './time';
 
 const CONTENT_DIR = join(process.cwd(), 'content');
 
 export type Race = RaceSummary & { html: string };
+export type Exercise = ExerciseSummary & { html: string };
 export type Page = { title: string; summary: string; html: string };
 
 /** ファイル名先頭の日付を除いて slug にする（2026-10-25-mito.md → mito） */
@@ -77,6 +79,39 @@ export async function getRaceBySlug(slug: string): Promise<Race | null> {
   return { ...toRaceSummary(found.slug, found.data), html: await toHtml(found.content) };
 }
 
+const toStringList = (value: unknown): string[] => (Array.isArray(value) ? value.map(String) : []);
+
+function toExerciseSummary(slug: string, data: Record<string, unknown>): ExerciseSummary {
+  const order = Number(data.order);
+  return {
+    slug,
+    title: String(data.title ?? slug),
+    // カテゴリが崩れていても一覧から消えないよう、力量へ寄せる
+    category: isCategory(data.category) ? data.category : 'strength',
+    summary: String(data.summary ?? ''),
+    dosage: String(data.dosage ?? ''),
+    equipment: toStringList(data.equipment),
+    muscles: toStringList(data.muscles),
+    order: Number.isFinite(order) ? order : 999,
+  };
+}
+
+/** 动作库の一覧（並べ替えは lib/exercises.ts）。本文は含めない */
+export function getAllExercises(): ExerciseSummary[] {
+  return readMarkdownDir('exercises').map(({ slug, data }) => toExerciseSummary(slug, data));
+}
+
+export async function getExerciseBySlug(slug: string): Promise<Exercise | null> {
+  const found = readMarkdownDir('exercises').find(entry => entry.slug === slug);
+  if (!found) return null;
+  return { ...toExerciseSummary(found.slug, found.data), html: await toHtml(found.content) };
+}
+
+/** 動作アニメーション（public/animations/<slug>.svg）があるか */
+export function hasAnimation(slug: string): boolean {
+  return existsSync(join(process.cwd(), 'public', 'animations', `${slug}.svg`));
+}
+
 /** content/pages/<name>.md の固定ページ */
 export async function getPage(name: string): Promise<Page> {
   const { data, content } = matter(readFileSync(join(CONTENT_DIR, 'pages', `${name}.md`), 'utf8'));
@@ -95,6 +130,8 @@ export type GuideSummary = {
   duration: string;
   /** 一覧の表示順。小さいほど先 */
   order: number;
+  /** この指南で使う动作库の slug */
+  exercises: string[];
 };
 
 export type Guide = GuideSummary & { html: string };
@@ -107,6 +144,7 @@ function toGuideSummary(slug: string, data: Record<string, unknown>): GuideSumma
     summary: String(data.summary ?? ''),
     duration: String(data.duration ?? ''),
     order: Number.isFinite(order) ? order : 999,
+    exercises: toStringList(data.exercises),
   };
 }
 

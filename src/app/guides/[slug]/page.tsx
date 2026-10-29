@@ -7,9 +7,17 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { BackLink } from '@/components/atoms/back-link';
 import { Prose } from '@/components/atoms/prose';
+import { SectionHeading } from '@/components/atoms/section-heading';
 import { Tag } from '@/components/atoms/tag';
+import { ExerciseCard } from '@/components/molecules/exercise-card';
 import { SITE } from '@/config/site';
-import { getAllGuides, getGuideBySlug, type GuideSummary } from '@/lib/content';
+import {
+  getAllExercises,
+  getAllGuides,
+  getGuideBySlug,
+  hasAnimation,
+  type GuideSummary,
+} from '@/lib/content';
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -71,6 +79,9 @@ export default async function GuidePage({ params }: Props) {
   // 前後の指南へ辿れるようにする（一覧へ戻らずに順に読める）
   const guides = getAllGuides();
   const index = guides.findIndex(g => g.slug === slug);
+  // frontmatter の exercises の順に並べる。存在しない slug は黙って落とす
+  const all = getAllExercises();
+  const exercises = guide.exercises.flatMap(s => all.filter(e => e.slug === s));
 
   return (
     <article>
@@ -84,6 +95,22 @@ export default async function GuidePage({ params }: Props) {
           {guide.summary}
         </Typography>
       </Box>
+      {exercises.length > 0 && (
+        <Box component="section" aria-labelledby="moves-heading" sx={{ mb: 6 }}>
+          <SectionHeading
+            id="moves-heading"
+            title="本篇动作"
+            more={{ href: '/exercises/', label: '动作库' }}
+          />
+          <Grid container spacing={2}>
+            {exercises.map(exercise => (
+              <Grid key={exercise.slug} size={{ xs: 6, sm: 4, md: 3 }}>
+                <ExerciseCard exercise={exercise} animated={hasAnimation(exercise.slug)} />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
+      )}
       <Prose html={guide.html} />
       <Divider sx={{ mt: 8, mb: 3 }} />
       <Grid component="nav" aria-label="上一篇 / 下一篇" container spacing={2}>

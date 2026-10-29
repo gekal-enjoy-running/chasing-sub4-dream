@@ -23,6 +23,7 @@ export const SITE = {
 export const NAV = [
   { href: '/races/', label: '比赛' },
   { href: '/guides/', label: '指南' },
+  { href: '/exercises/', label: '动作' },
   { href: '/pace/', label: '配速' },
   { href: '/plan/', label: '计划' },
   { href: '/about/', label: '关于' },

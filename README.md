@@ -1,7 +1,7 @@
 # Chasing Sub-4 Dream（全马破四追梦者）
 
 フルマラソン 4 時間切り（サブ4 / 破四）を目指す市民ランナーのサイト。
-大会記録・破四に必要な能力・ペース表・トレーニング指南を、Next.js の静的書き出しで配信する。
+大会記録・破四に必要な能力・ペース表・トレーニング指南・動作ライブラリ（動図つき）を、Next.js の静的書き出しで配信する。
 企画の背景とページ構成は [docs/proposal.md](docs/proposal.md)（中国語）を参照。
 
 - 公開 URL: https://chasing-sub4-dream.gekal.cn
@@ -17,14 +17,15 @@ npm ci
 npm run dev          # http://localhost:3000
 ```
 
-| コマンド            | 内容                                            |
-| ------------------- | ----------------------------------------------- |
-| `npm run dev`       | 開発サーバ（Turbopack）                         |
-| `npm run typecheck` | 型チェック（TypeScript 7）                      |
-| `npm run lint`      | ESLint + Prettier                               |
-| `npm test`          | `src/lib/` の単体テスト（node:test）            |
-| `npm run build`     | `out/` へ静的書き出し                           |
-| `npm run preview`   | `out/` をローカル配信。**公開前に必ず確認する** |
+| コマンド                 | 内容                                                    |
+| ------------------------ | ------------------------------------------------------- |
+| `npm run dev`            | 開発サーバ（Turbopack）                                 |
+| `npm run typecheck`      | 型チェック（TypeScript 7）                              |
+| `npm run lint`           | ESLint + Prettier                                       |
+| `npm test`               | `src/lib/` の単体テスト（node:test）                    |
+| `npm run build`          | `out/` へ静的書き出し                                   |
+| `npm run gen:animations` | 動作アニメーション（`public/animations/*.svg`）を再生成 |
+| `npm run preview`        | `out/` をローカル配信。**公開前に必ず確認する**         |
 
 ## コンテンツの追加方法
 
@@ -58,6 +59,27 @@ order: 1 # 一覧の並び順
 ---
 ```
 
+### 動作 `content/exercises/<slug>.md`
+
+```markdown
+---
+title: 深蹲
+category: strength # warm-up / stretch / strength / drills
+order: 1 # カテゴリ内の並び順
+summary: 一覧と description に使う 1〜2 文。
+dosage: 15 次 × 3 组
+equipment: [无（进阶可用哑铃或壶铃）]
+muscles: [股四头肌, 臀大肌, 核心]
+---
+
+## 动作步骤 / ## 要点 / ## 常见错误
+```
+
+URL は `/exercises/<slug>/`。`public/animations/<slug>.svg` があれば動図を表示する。
+動図は [scripts/generate-animations.mjs](scripts/generate-animations.mjs) に関節角度のキーフレームを足して
+`npm run gen:animations` で生成する（棒人間の SVG。SMIL で動き、OS のダークモードに追従する）。
+指南ページの「本篇动作」は、指南の frontmatter `exercises: [squat, plank]` で指定する。
+
 ### 固定ページ
 
 `content/pages/about.md`（关于）と `content/pages/plan.md`（训练计划）。
@@ -74,18 +96,20 @@ main へ push すると GitHub Actions（`.github/workflows/ci.yml`）が検証 
 
 ## ディレクトリ構成
 
-| パス                      | 内容                                                                                   |
-| ------------------------- | -------------------------------------------------------------------------------------- |
-| `content/races/`          | 大会記録（公式記録）・レースレポート                                                   |
-| `content/guides/`         | 训练指南（热身・拉伸・力量・技术・恢复）                                               |
-| `content/pages/`          | 固定ページ（about / plan）                                                             |
-| `src/app/`                | ルーティング（`/` `/races/` `/guides/` `/pace/` `/plan/` `/about/`、sitemap / robots） |
-| `src/components/`         | Atomic Design（atoms / molecules / organisms）と MUI テーマ（providers）               |
-| `src/lib/`                | Markdown 読み込み（`content.ts`）、タイム・ペース換算、大会集計、日付整形とテスト      |
-| `src/config/site.ts`      | サイト名・URL・目標タイム・ナビゲーションの唯一の定義                                  |
-| `src/config/abilities.ts` | トップページの「破四需要的能力」カードの内容                                           |
-| `public/`                 | CNAME、OG 画像                                                                         |
-| `docs/proposal.md`        | サイト企画書                                                                           |
+| パス                              | 内容                                                                                                 |
+| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `content/races/`                  | 大会記録（公式記録）・レースレポート                                                                 |
+| `content/guides/`                 | 训练指南（热身・拉伸・力量・技术・恢复）                                                             |
+| `content/exercises/`              | 动作库（热身・拉伸・力量・跑步技术の各動作）                                                         |
+| `content/pages/`                  | 固定ページ（about / plan）                                                                           |
+| `src/app/`                        | ルーティング（`/` `/races/` `/guides/` `/exercises/` `/pace/` `/plan/` `/about/`、sitemap / robots） |
+| `src/components/`                 | Atomic Design（atoms / molecules / organisms）と MUI テーマ（providers）                             |
+| `src/lib/`                        | Markdown 読み込み（`content.ts`）、タイム・ペース換算、大会集計、日付整形とテスト                    |
+| `src/config/site.ts`              | サイト名・URL・目標タイム・ナビゲーションの唯一の定義                                                |
+| `src/config/abilities.ts`         | トップページの「破四需要的能力」カードの内容                                                         |
+| `public/`                         | CNAME、OG 画像、動作アニメーション（`animations/`）                                                  |
+| `docs/proposal.md`                | サイト企画書                                                                                         |
+| `scripts/generate-animations.mjs` | 動作アニメーションの生成スクリプト                                                                   |
 
 ## 技術スタック
 

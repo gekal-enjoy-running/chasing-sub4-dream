@@ -1,7 +1,7 @@
 ---
 title: 前后摆腿
 category: warm-up
-order: 1
+order: 5
 summary: 扶墙让腿像钟摆一样前后摆动，打开髋关节的活动范围，是跑前热身的第一个动态动作。
 dosage: 左右各 10〜15 次
 equipment: [墙壁或栏杆]

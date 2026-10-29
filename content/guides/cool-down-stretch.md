@@ -3,7 +3,17 @@ title: 跑后拉伸
 summary: 慢跑放松后做 10 分钟静态拉伸，帮助心率回落、缓解肌肉紧张，保持关节活动度。
 duration: 10〜15 分钟
 order: 2
-exercises: [calf-stretch, quad-stretch, hamstring-stretch, hip-flexor-stretch]
+exercises:
+  [
+    calf-stretch,
+    quad-stretch,
+    hamstring-stretch,
+    hip-flexor-stretch,
+    figure-four-stretch,
+    it-band-stretch,
+    childs-pose,
+    foam-rolling,
+  ]
 ---
 
 ## 需要的用具
@@ -38,11 +48,11 @@ exercises: [calf-stretch, quad-stretch, hamstring-stretch, hip-flexor-stretch]
 | 大腿前侧          | [站立抓脚踝屈膝](/exercises/quad-stretch/)                 | 膝盖朝下，骨盆微微前推           |
 | 大腿后侧          | 坐姿体前屈 / [站立勾脚前屈](/exercises/hamstring-stretch/) | 背部保持平直，从髋部折叠         |
 | 髋屈肌            | [半跪弓步前推](/exercises/hip-flexor-stretch/)             | 后侧臀部收紧，上身直立           |
-| 臀部              | 仰卧 4 字拉伸                                              | 把小腿搭在另一侧膝盖上，抱腿拉近 |
-| 髂胫束 / 大腿外侧 | 站立交叉腿侧弯                                             | 后侧腿外侧有牵拉感               |
-| 下背部            | 婴儿式                                                     | 臀部坐向脚跟，手臂前伸           |
+| 臀部              | [仰卧 4 字拉伸](/exercises/figure-four-stretch/)           | 把小腿搭在另一侧膝盖上，抱腿拉近 |
+| 髂胫束 / 大腿外侧 | [站立交叉腿侧弯](/exercises/it-band-stretch/)              | 后侧腿外侧有牵拉感               |
+| 下背部            | [婴儿式](/exercises/childs-pose/)                          | 臀部坐向脚跟，手臂前伸           |
 
-## 泡沫轴放松（可选）
+## [泡沫轴放松](/exercises/foam-rolling/)（可选）
 
 小腿、大腿前后侧、臀部、大腿外侧各滚 **60〜90 秒**。
 遇到痛点停留 20〜30 秒，**不要直接压在膝盖、骨头或疼痛的关节上**。

@@ -1,7 +1,7 @@
 ---
 title: 弓步走
 category: warm-up
-order: 2
+order: 7
 summary: 一步一个弓步向前走，同时活动髋、膝、踝并激活臀腿，可以加上转体一起热身上半身。
 dosage: 10〜12 步
 equipment: [平坦场地 10〜20m]

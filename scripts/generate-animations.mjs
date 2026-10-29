@@ -161,6 +161,8 @@ function propSvg(prop, first) {
       return `<rect class="b" x="${prop.x}" y="${GROUND - prop.h}" width="${prop.w}" height="${prop.h}" rx="2"/>`;
     case 'mat':
       return `<rect class="b" x="${prop.x}" y="${GROUND - 3}" width="${prop.w}" height="4" rx="2"/>`;
+    case 'roller':
+      return `<circle class="b" cx="${prop.x}" cy="${GROUND - prop.r}" r="${prop.r}"/>`;
     default:
       return '';
   }
@@ -883,6 +885,536 @@ const EXERCISES = [
     ],
   },
 ];
+
+// ---- 追加の動作 ---------------------------------------------------------
+// 横方向の動き（左右摆腿・侧走など）は正面から見た図にする。
+// 同じ関節モデルで、x を「左右」と読み替えるだけで描ける。
+
+/** 正面図で腕を横に広げてバランスを取る */
+const ARMS_OUT = { armN: 70, foreN: 80, armF: -70, foreF: -80 };
+/** 走る姿勢（N 脚が前） */
+const STRIDE_N = { thighN: 45, shinN: 15, footN: 100, thighF: -30, shinF: -95, footF: -20 };
+const STRIDE_F = { thighF: 45, shinF: 15, footF: 100, thighN: -30, shinN: -95, footN: -20 };
+
+EXERCISES.push(
+  {
+    id: 'ankle-circles',
+    title: '踝关节绕环',
+    keys: [40, 100, 140, 100].map(foot => ({
+      dur: 0.45,
+      pose: {
+        ...STAND,
+        ...HANDS_ON_HIPS,
+        thighN: 25,
+        shinN: 15,
+        footN: foot,
+        anchor: ['ankleF', 110, GROUND - 3],
+      },
+    })),
+  },
+  {
+    id: 'knee-circles',
+    title: '膝关节绕环',
+    keys: [
+      [25, -25, 150],
+      [15, -5, 155],
+      [5, -15, 158],
+      [15, -30, 152],
+    ].map(([thigh, shin, torso]) => ({
+      dur: 0.5,
+      pose: {
+        torso,
+        thighN: thigh,
+        shinN: shin,
+        thighF: thigh,
+        shinF: shin,
+        ikArmN: { at: 'kneeN', bend: 1 },
+        ikArmF: { at: 'kneeN', bend: 1 },
+        anchor: ['ankleN', 120, GROUND - 3],
+      },
+    })),
+  },
+  {
+    id: 'hip-circles',
+    title: '髋关节绕环',
+    props: [{ type: 'wall', at: 'handF' }],
+    keys: [
+      [90, 0],
+      [60, -60],
+      [-10, -70],
+      [20, -10],
+    ].map(([thigh, shin]) => ({
+      dur: 0.55,
+      pose: {
+        ...STAND,
+        thighN: thigh,
+        shinN: shin,
+        armF: 100,
+        foreF: 95,
+        armN: 10,
+        foreN: 20,
+        anchor: ['ankleF', 100, GROUND - 3],
+      },
+    })),
+  },
+  {
+    id: 'arm-circles',
+    title: '手臂大绕环',
+    keys: [0, 90, 180, 270].map(a => ({
+      dur: 0.45,
+      pose: {
+        ...STAND,
+        armN: a,
+        foreN: a,
+        armF: a + 8,
+        foreF: a + 8,
+        anchor: ['ankleN', 120, GROUND - 3],
+      },
+    })),
+  },
+  {
+    id: 'lateral-leg-swing',
+    title: '左右摆腿（正面）',
+    keys: [
+      {
+        dur: 0.7,
+        pose: { ...STAND, ...ARMS_OUT, thighN: 40, shinN: 40, anchor: ['ankleF', 115, GROUND - 3] },
+      },
+      {
+        dur: 0.7,
+        pose: {
+          ...STAND,
+          ...ARMS_OUT,
+          thighN: -30,
+          shinN: -30,
+          anchor: ['ankleF', 115, GROUND - 3],
+        },
+      },
+    ],
+  },
+  {
+    id: 'worlds-greatest-stretch',
+    title: '世界上最伟大的拉伸',
+    props: [{ type: 'mat', x: 20, w: 200 }],
+    keys: [
+      {
+        dur: 1,
+        pose: {
+          torso: 170,
+          thighN: 88,
+          shinN: -5,
+          thighF: -55,
+          shinF: -60,
+          footF: -90,
+          armN: 30,
+          foreN: 60,
+          armF: 25,
+          foreF: 55,
+          anchor: ['ankleN', 160, GROUND - 3],
+        },
+      },
+      {
+        dur: 1.2,
+        pose: {
+          torso: 118,
+          thighN: 88,
+          shinN: -5,
+          thighF: -55,
+          shinF: -60,
+          footF: -90,
+          ikArmN: { at: [150, GROUND - 6], bend: -1 },
+          ikArmF: { at: [168, GROUND - 3], bend: 1 },
+          anchor: ['ankleN', 160, GROUND - 3],
+        },
+      },
+      {
+        dur: 1.2,
+        pose: {
+          torso: 125,
+          thighN: 88,
+          shinN: -5,
+          thighF: -55,
+          shinF: -60,
+          footF: -90,
+          armN: 185,
+          foreN: 185,
+          ikArmF: { at: [168, GROUND - 3], bend: 1 },
+          anchor: ['ankleN', 160, GROUND - 3],
+        },
+      },
+    ],
+  },
+  {
+    id: 'a-skip',
+    title: 'A-skip（垫步高抬腿）',
+    keys: [
+      {
+        dur: 0.22,
+        pose: {
+          ...STAND,
+          ...SWING_F,
+          thighN: 90,
+          shinN: 0,
+          footN: 70,
+          footF: 60,
+          anchor: ['hip', 110, 96],
+        },
+      },
+      {
+        dur: 0.22,
+        pose: { ...STAND, ...SWING_F, thighN: 20, shinN: 0, footN: 80, anchor: ['hip', 110, 104] },
+      },
+      {
+        dur: 0.22,
+        pose: {
+          ...STAND,
+          ...SWING_N,
+          thighF: 90,
+          shinF: 0,
+          footF: 70,
+          footN: 60,
+          anchor: ['hip', 110, 96],
+        },
+      },
+      {
+        dur: 0.22,
+        pose: { ...STAND, ...SWING_N, thighF: 20, shinF: 0, footF: 80, anchor: ['hip', 110, 104] },
+      },
+    ],
+  },
+  {
+    id: 'strides',
+    title: '加速跑',
+    keys: [
+      {
+        dur: 0.28,
+        pose: { ...STAND, ...SWING_F, ...STRIDE_N, torso: 174, anchor: ['hip', 110, 104] },
+      },
+      {
+        dur: 0.28,
+        pose: { ...STAND, ...SWING_N, ...STRIDE_F, torso: 174, anchor: ['hip', 110, 104] },
+      },
+    ],
+  },
+  {
+    id: 'figure-four-stretch',
+    title: '仰卧 4 字拉伸',
+    props: [{ type: 'mat', x: 20, w: 200 }],
+    keys: [
+      {
+        dur: 1.5,
+        pose: {
+          torso: -90,
+          head: -90,
+          ikF: { at: [165, GROUND - 3], bend: 1 },
+          footF: 90,
+          thighN: 140,
+          shinN: 75,
+          armN: 90,
+          foreN: 90,
+          armF: 90,
+          foreF: 90,
+          anchor: ['shoulder', 64, LYING_Y],
+        },
+      },
+      {
+        dur: 1.5,
+        pose: {
+          torso: -90,
+          head: -90,
+          thighF: 165,
+          shinF: 100,
+          footF: 190,
+          thighN: 155,
+          shinN: 70,
+          ikArmN: { at: 'kneeF', bend: -1 },
+          ikArmF: { at: 'kneeF', bend: -1 },
+          anchor: ['shoulder', 64, LYING_Y],
+        },
+      },
+    ],
+  },
+  {
+    id: 'it-band-stretch',
+    title: '站立交叉腿侧弯（正面）',
+    keys: [
+      {
+        dur: 1.5,
+        pose: {
+          torso: 180,
+          thighN: -10,
+          shinN: -10,
+          thighF: 10,
+          shinF: 10,
+          armN: 175,
+          foreN: 175,
+          armF: 185,
+          foreF: 185,
+          anchor: ['ankleF', 125, GROUND - 3],
+        },
+      },
+      {
+        dur: 1.5,
+        pose: {
+          torso: 165,
+          thighN: -14,
+          shinN: -14,
+          thighF: 8,
+          shinF: 8,
+          armN: 145,
+          foreN: 140,
+          armF: 160,
+          foreF: 150,
+          anchor: ['ankleF', 125, GROUND - 3],
+        },
+      },
+    ],
+  },
+  {
+    id: 'childs-pose',
+    title: '婴儿式',
+    props: [{ type: 'mat', x: 20, w: 200 }],
+    keys: [
+      {
+        dur: 1.8,
+        pose: {
+          torso: 86,
+          head: 70,
+          thighN: 74,
+          shinN: -90,
+          footN: -95,
+          thighF: 74,
+          shinF: -90,
+          footF: -95,
+          armN: 96,
+          foreN: 93,
+          armF: 96,
+          foreF: 93,
+          anchor: ['kneeN', 120, GROUND - 4],
+        },
+      },
+      {
+        dur: 1.8,
+        pose: {
+          torso: 80,
+          head: 66,
+          thighN: 66,
+          shinN: -90,
+          footN: -95,
+          thighF: 66,
+          shinF: -90,
+          footF: -95,
+          armN: 92,
+          foreN: 92,
+          armF: 92,
+          foreF: 92,
+          anchor: ['kneeN', 120, GROUND - 4],
+        },
+      },
+    ],
+  },
+  {
+    id: 'foam-rolling',
+    title: '泡沫轴放松（小腿）',
+    props: [{ type: 'roller', x: 160, r: 11 }],
+    keys: [
+      {
+        dur: 1.4,
+        pose: {
+          torso: -150,
+          head: -165,
+          thighN: 94,
+          shinN: 94,
+          footN: 160,
+          thighF: 94,
+          shinF: 94,
+          footF: 160,
+          armN: -15,
+          foreN: -15,
+          armF: -12,
+          foreF: -12,
+          anchor: ['hip', 92, 165],
+        },
+      },
+      {
+        dur: 1.4,
+        pose: {
+          torso: -150,
+          head: -165,
+          thighN: 94,
+          shinN: 94,
+          footN: 160,
+          thighF: 94,
+          shinF: 94,
+          footF: 160,
+          armN: -15,
+          foreN: -15,
+          armF: -12,
+          foreF: -12,
+          anchor: ['hip', 70, 165],
+        },
+      },
+    ],
+  },
+  {
+    id: 'side-lying-leg-raise',
+    title: '侧卧抬腿（正面）',
+    props: [{ type: 'mat', x: 20, w: 200 }],
+    keys: [92, 135].map(top => ({
+      dur: 0.9,
+      pose: {
+        torso: -90,
+        head: -100,
+        thighF: 90,
+        shinF: 90,
+        thighN: top,
+        shinN: top,
+        footN: top + 90,
+        // 下側の腕は頭の下に伸ばし、上側の腕は体に沿わせる（床より下に出ないように）
+        armF: -90,
+        foreF: -90,
+        armN: 92,
+        foreN: 92,
+        anchor: ['hip', 110, LYING_Y],
+      },
+    })),
+  },
+  {
+    id: 'band-walk',
+    title: '弹力带侧走（正面）',
+    keys: [
+      {
+        dur: 0.6,
+        pose: {
+          torso: 180,
+          thighN: 18,
+          shinN: 4,
+          thighF: -18,
+          shinF: -4,
+          armN: 20,
+          foreN: -30,
+          armF: -20,
+          foreF: 30,
+          anchor: ['ankleF', 100, GROUND - 3],
+        },
+      },
+      {
+        dur: 0.6,
+        pose: {
+          torso: 180,
+          thighN: 34,
+          shinN: 18,
+          thighF: -14,
+          shinF: -2,
+          armN: 20,
+          foreN: -30,
+          armF: -20,
+          foreF: 30,
+          anchor: ['ankleF', 100, GROUND - 3],
+        },
+      },
+    ],
+  },
+  {
+    id: 'side-plank',
+    title: '侧平板支撑',
+    props: [{ type: 'mat', x: 20, w: 200 }],
+    keys: [100, 97].map(torso => ({
+      dur: 1.5,
+      pose: {
+        torso,
+        thighN: torso - 180,
+        shinN: torso - 180,
+        thighF: torso - 180,
+        shinF: torso - 180,
+        footN: 10,
+        footF: 10,
+        armN: 0,
+        foreN: 90,
+        armF: 180,
+        foreF: 180,
+        anchor: ['elbowN', 160, GROUND - 4],
+      },
+    })),
+  },
+  {
+    id: 'romanian-deadlift',
+    title: '罗马尼亚硬拉',
+    keys: [
+      {
+        dur: 1.1,
+        pose: {
+          ...STAND,
+          thighN: -2,
+          shinN: 3,
+          thighF: -2,
+          shinF: 3,
+          armN: 0,
+          foreN: 0,
+          armF: 0,
+          foreF: 0,
+          anchor: ['ankleN', 125, GROUND - 3],
+        },
+      },
+      {
+        dur: 1.1,
+        pose: {
+          torso: 98,
+          head: 95,
+          thighN: -18,
+          shinN: 8,
+          thighF: -18,
+          shinF: 8,
+          armN: 0,
+          foreN: 0,
+          armF: 0,
+          foreF: 0,
+          anchor: ['ankleN', 125, GROUND - 3],
+        },
+      },
+    ],
+  },
+  {
+    id: 'jump-rope',
+    title: '跳绳',
+    keys: [
+      {
+        dur: 0.2,
+        pose: {
+          ...STAND,
+          thighN: 4,
+          shinN: -4,
+          thighF: 4,
+          shinF: -4,
+          footN: 35,
+          footF: 35,
+          armN: 25,
+          foreN: 100,
+          armF: 20,
+          foreF: 95,
+          anchor: ['hip', 115, 96],
+        },
+      },
+      {
+        dur: 0.2,
+        pose: {
+          ...STAND,
+          thighN: 6,
+          shinN: -8,
+          thighF: 6,
+          shinF: -8,
+          footN: 80,
+          footF: 80,
+          armN: 25,
+          foreN: 110,
+          armF: 20,
+          foreF: 105,
+          anchor: ['hip', 115, 104],
+        },
+      },
+    ],
+  }
+);
 
 mkdirSync(OUT_DIR, { recursive: true });
 for (const ex of EXERCISES) {

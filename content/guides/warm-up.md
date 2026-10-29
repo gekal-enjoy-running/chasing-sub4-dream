@@ -3,7 +3,22 @@ title: 跑前热身
 summary: 用 10〜15 分钟把心率、体温和关节活动度提上来，减少受伤风险，让前几公里不再“僵硬”。
 duration: 10〜15 分钟
 order: 1
-exercises: [leg-swing, lunge, glute-bridge, high-knees, quick-steps, butt-kicks]
+exercises:
+  [
+    ankle-circles,
+    knee-circles,
+    hip-circles,
+    arm-circles,
+    leg-swing,
+    lateral-leg-swing,
+    lunge,
+    worlds-greatest-stretch,
+    glute-bridge,
+    high-knees,
+    quick-steps,
+    butt-kicks,
+    strides,
+  ]
 ---
 
 ## 需要的用具
@@ -30,28 +45,28 @@ exercises: [leg-swing, lunge, glute-bridge, high-knees, quick-steps, butt-kicks]
 
 ### 2. 关节活动（2 分钟）
 
-| 动作                       | 次数         |
-| -------------------------- | ------------ |
-| 踝关节绕环                 | 左右各 10 圈 |
-| 膝关节绕环                 | 10 圈        |
-| 髋关节绕环（站立抬腿画圈） | 左右各 10 圈 |
-| 手臂大绕环                 | 前后各 10 圈 |
+| 动作                                                  | 次数         |
+| ----------------------------------------------------- | ------------ |
+| [踝关节绕环](/exercises/ankle-circles/)               | 左右各 10 圈 |
+| [膝关节绕环](/exercises/knee-circles/)                | 10 圈        |
+| [髋关节绕环](/exercises/hip-circles/)（站立抬腿画圈） | 左右各 10 圈 |
+| [手臂大绕环](/exercises/arm-circles/)                 | 前后各 10 圈 |
 
 ### 3. 动态拉伸（4〜5 分钟）
 
-| 动作                               | 次数             | 要点                             |
-| ---------------------------------- | ---------------- | -------------------------------- |
-| [前后摆腿](/exercises/leg-swing/)  | 左右各 10〜15 次 | 扶墙，幅度由小到大               |
-| 左右摆腿                           | 左右各 10〜15 次 | 骨盆保持朝前                     |
-| [弓步走](/exercises/lunge/) + 转体 | 10 步            | 前膝不内扣，上身向前腿一侧转     |
-| 世界上最伟大的拉伸                 | 左右各 5 次      | 弓步 → 同侧肘贴地 → 手臂向上打开 |
-| [臀桥](/exercises/glute-bridge/)   | 15 次            | 激活臀大肌，顶端停 1 秒          |
+| 动作                                                      | 次数             | 要点                             |
+| --------------------------------------------------------- | ---------------- | -------------------------------- |
+| [前后摆腿](/exercises/leg-swing/)                         | 左右各 10〜15 次 | 扶墙，幅度由小到大               |
+| [左右摆腿](/exercises/lateral-leg-swing/)                 | 左右各 10〜15 次 | 骨盆保持朝前                     |
+| [弓步走](/exercises/lunge/) + 转体                        | 10 步            | 前膝不内扣，上身向前腿一侧转     |
+| [世界上最伟大的拉伸](/exercises/worlds-greatest-stretch/) | 左右各 5 次      | 弓步 → 同侧肘贴地 → 手臂向上打开 |
+| [臀桥](/exercises/glute-bridge/)                          | 15 次            | 激活臀大肌，顶端停 1 秒          |
 
 ### 4. 跑步专项动作（2〜3 分钟）
 
 [高抬腿](/exercises/high-knees/)、[小步跑](/exercises/quick-steps/)、[后踢腿](/exercises/butt-kicks/)各 20〜30m（详见 [跑步技术练习](/guides/running-drills/)）。
 
-### 5. 加速跑（速度课 / 比赛前）
+### 5. [加速跑](/exercises/strides/)（速度课 / 比赛前）
 
 2〜4 组 × 80〜100m，逐渐加速到接近 5km 比赛配速，组间走回。
 

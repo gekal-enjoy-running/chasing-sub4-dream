@@ -3,7 +3,7 @@ title: 跑步技术练习
 summary: 高抬腿、小步跑、后踢腿等专项动作，改善着地、摆臂和步频，让跑姿更经济。
 duration: 5〜10 分钟
 order: 4
-exercises: [quick-steps, high-knees, butt-kicks, straight-leg-run]
+exercises: [quick-steps, high-knees, butt-kicks, a-skip, straight-leg-run, strides]
 ---
 
 ## 需要的用具
@@ -21,14 +21,14 @@ exercises: [quick-steps, high-knees, butt-kicks, straight-leg-run]
 
 每个动作 **20〜30m × 2 组**，走回或慢跑回起点。
 
-| 动作                                   | 要点                               | 改善             |
-| -------------------------------------- | ---------------------------------- | ---------------- |
-| [小步跑](/exercises/quick-steps/)      | 小幅快频率，前脚掌轻触地，脚踝弹性 | 着地刚度、步频   |
-| [高抬腿](/exercises/high-knees/)       | 大腿抬至水平，身体不后仰           | 屈髋力量、抬腿   |
-| [后踢腿](/exercises/butt-kicks/)       | 脚跟快速靠近臀部                   | 收腿速度         |
-| A-skip（垫步高抬腿）                   | 节奏感，着地在身体正下方           | 协调、着地位置   |
-| [直腿跑](/exercises/straight-leg-run/) | 膝盖伸直，用髋部带动               | 臀部和腘绳肌发力 |
-| 加速跑                                 | 80〜100m 逐渐加速                  | 把技术串到跑步中 |
+| 动作                                       | 要点                               | 改善             |
+| ------------------------------------------ | ---------------------------------- | ---------------- |
+| [小步跑](/exercises/quick-steps/)          | 小幅快频率，前脚掌轻触地，脚踝弹性 | 着地刚度、步频   |
+| [高抬腿](/exercises/high-knees/)           | 大腿抬至水平，身体不后仰           | 屈髋力量、抬腿   |
+| [后踢腿](/exercises/butt-kicks/)           | 脚跟快速靠近臀部                   | 收腿速度         |
+| [A-skip（垫步高抬腿）](/exercises/a-skip/) | 节奏感，着地在身体正下方           | 协调、着地位置   |
+| [直腿跑](/exercises/straight-leg-run/)     | 膝盖伸直，用髋部带动               | 臀部和腘绳肌发力 |
+| [加速跑](/exercises/strides/)              | 80〜100m 逐渐加速                  | 把技术串到跑步中 |
 
 ## 跑姿检查清单
 

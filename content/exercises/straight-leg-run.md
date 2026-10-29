@@ -1,7 +1,7 @@
 ---
 title: 直腿跑
 category: drills
-order: 4
+order: 5
 summary: 膝盖伸直、用髋部带动腿向下“扒地”，体会臀部和腘绳肌发力推动身体向前。
 dosage: 20〜30m × 2 组
 equipment: [平坦跑道或空地 20〜30m]

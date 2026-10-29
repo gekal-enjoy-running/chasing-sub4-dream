@@ -4,7 +4,21 @@ summary: 每周 2 次、每次 30 分钟的力量训练，让臀腿和核心撑�
 duration: 每次 30 分钟 / 每周 2 次
 order: 3
 exercises:
-  [squat, split-squat, glute-bridge, single-leg-bridge, calf-raise, plank, dead-bug, bird-dog]
+  [
+    squat,
+    split-squat,
+    glute-bridge,
+    single-leg-bridge,
+    calf-raise,
+    side-lying-leg-raise,
+    band-walk,
+    plank,
+    side-plank,
+    dead-bug,
+    bird-dog,
+    romanian-deadlift,
+    jump-rope,
+  ]
 ---
 
 ## 为什么跑者需要力量训练
@@ -41,28 +55,28 @@ exercises:
 
 ### 下肢
 
-| 动作                                      | 次数         | 目标                   |
-| ----------------------------------------- | ------------ | ---------------------- |
-| [深蹲](/exercises/squat/)                 | 15 次        | 股四头肌、臀部         |
-| [保加利亚分腿蹲](/exercises/split-squat/) | 左右各 10 次 | 单腿稳定、臀部         |
-| [单腿臀桥](/exercises/single-leg-bridge/) | 左右各 12 次 | 臀大肌、腘绳肌         |
-| [单腿提踵](/exercises/calf-raise/)        | 左右各 15 次 | 小腿、跟腱             |
-| 侧卧抬腿 / 弹力带侧走                     | 左右各 15 次 | 臀中肌（防止膝盖内扣） |
+| 动作                                                                               | 次数         | 目标                   |
+| ---------------------------------------------------------------------------------- | ------------ | ---------------------- |
+| [深蹲](/exercises/squat/)                                                          | 15 次        | 股四头肌、臀部         |
+| [保加利亚分腿蹲](/exercises/split-squat/)                                          | 左右各 10 次 | 单腿稳定、臀部         |
+| [单腿臀桥](/exercises/single-leg-bridge/)                                          | 左右各 12 次 | 臀大肌、腘绳肌         |
+| [单腿提踵](/exercises/calf-raise/)                                                 | 左右各 15 次 | 小腿、跟腱             |
+| [侧卧抬腿](/exercises/side-lying-leg-raise/) / [弹力带侧走](/exercises/band-walk/) | 左右各 15 次 | 臀中肌（防止膝盖内扣） |
 
 ### 核心
 
-| 动作                          | 时间 / 次数      | 目标             |
-| ----------------------------- | ---------------- | ---------------- |
-| [平板支撑](/exercises/plank/) | 45〜60 秒        | 腹横肌、整体稳定 |
-| 侧平板支撑                    | 左右各 30〜45 秒 | 腹斜肌、骨盆稳定 |
-| [死虫](/exercises/dead-bug/)  | 左右各 10 次     | 抗伸展、协调     |
-| [鸟狗](/exercises/bird-dog/)  | 左右各 10 次     | 下背部、臀部     |
+| 动作                                 | 时间 / 次数      | 目标             |
+| ------------------------------------ | ---------------- | ---------------- |
+| [平板支撑](/exercises/plank/)        | 45〜60 秒        | 腹横肌、整体稳定 |
+| [侧平板支撑](/exercises/side-plank/) | 左右各 30〜45 秒 | 腹斜肌、骨盆稳定 |
+| [死虫](/exercises/dead-bug/)         | 左右各 10 次     | 抗伸展、协调     |
+| [鸟狗](/exercises/bird-dog/)         | 左右各 10 次     | 下背部、臀部     |
 
 ### 进阶（有器械时）
 
-- 罗马尼亚硬拉：8〜10 次 × 3 组，强化后链
-- 负重提踵：12 次 × 3 组
-- 跳箱 / 跳绳：增强弹性和着地刚度，每周 1 次即可
+- [罗马尼亚硬拉](/exercises/romanian-deadlift/)：8〜10 次 × 3 组，强化后链
+- 负重[提踵](/exercises/calf-raise/)：12 次 × 3 组
+- 跳箱 / [跳绳](/exercises/jump-rope/)：增强弹性和着地刚度，每周 1 次即可
 
 ## 要点
 

@@ -10,6 +10,7 @@ exercises:
     glute-bridge,
     single-leg-bridge,
     calf-raise,
+    weighted-calf-raise,
     side-lying-leg-raise,
     band-walk,
     plank,
@@ -18,6 +19,7 @@ exercises:
     bird-dog,
     romanian-deadlift,
     jump-rope,
+    box-jump,
   ]
 ---
 
@@ -75,8 +77,8 @@ exercises:
 ### 进阶（有器械时）
 
 - [罗马尼亚硬拉](/exercises/romanian-deadlift/)：8〜10 次 × 3 组，强化后链
-- 负重[提踵](/exercises/calf-raise/)：12 次 × 3 组
-- 跳箱 / [跳绳](/exercises/jump-rope/)：增强弹性和着地刚度，每周 1 次即可
+- [负重提踵](/exercises/weighted-calf-raise/)：12 次 × 3 组
+- [跳箱](/exercises/box-jump/) / [跳绳](/exercises/jump-rope/)：增强弹性和着地刚度，每周 1 次即可
 
 ## 要点
 

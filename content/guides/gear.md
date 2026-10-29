@@ -66,8 +66,8 @@ order: 6
 | 长弹力带           | 辅助拉伸大腿后侧，或做阻力训练                         | [大腿后侧拉伸](/exercises/hamstring-stretch/)                                                                               |
 | 长凳 / 稳固的椅子  | 后脚搭在上面做单腿蹲                                   | [保加利亚分腿蹲](/exercises/split-squat/)                                                                                   |
 | 台阶               | 让脚跟落到台阶以下，扩大活动范围                       | [单腿提踵](/exercises/calf-raise/)                                                                                          |
-| 哑铃 / 壶铃        | 给深蹲、硬拉、提踵加负重                               | 力量训练进阶                                                                                                                |
-| 跳绳               | 增强脚踝弹性和着地刚度                                 | 每周 1 次，5〜10 分钟                                                                                                       |
+| 哑铃 / 壶铃        | 给深蹲、硬拉、提踵加负重                               | [负重提踵](/exercises/weighted-calf-raise/)、[罗马尼亚硬拉](/exercises/romanian-deadlift/)                                  |
+| 跳绳               | 增强脚踝弹性和着地刚度                                 | [跳绳](/exercises/jump-rope/)，每周 1 次，5〜10 分钟                                                                        |
 
 ## 比赛日清单
 

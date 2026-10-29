@@ -184,16 +184,28 @@ function render(ex) {
     anim('cy', fs.map(j => fmt(j.head[1])).join(';')) +
     '</circle>';
   const props = (ex.props ?? []).map(p => propSvg(p, fs[0])).join('');
+  // 哑铃は手と一緒に動くため、静的な props ではなく手の座標でアニメーションさせる
+  const weights = ex.weights
+    ? ['handF', 'handN']
+        .map(
+          hand =>
+            `<circle class="w" r="6" cx="${fmt(fs[0][hand][0])}" cy="${fmt(fs[0][hand][1])}">` +
+            anim('cx', fs.map(j => fmt(j[hand][0])).join(';')) +
+            anim('cy', fs.map(j => fmt(j[hand][1])).join(';')) +
+            '</circle>'
+        )
+        .join('')
+    : '';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 200" width="240" height="200" role="img" aria-label="${ex.title}">
 <title>${ex.title}</title>
 <style>
 path{fill:none;stroke-width:7;stroke-linecap:round;stroke-linejoin:round}
 .n{stroke:#c2410c}.f{stroke:#fdba74}.h{fill:#c2410c}
-.g{stroke:#d6d3d1}.p{stroke:#a8a29e}.b{fill:#e7e5e4;stroke:#a8a29e;stroke-width:1.5}
-@media (prefers-color-scheme:dark){.n{stroke:#fb923c}.f{stroke:#9a3412}.h{fill:#fb923c}.g{stroke:#44403c}.p{stroke:#78716c}.b{fill:#292524;stroke:#57534e}}
+.g{stroke:#d6d3d1}.p{stroke:#a8a29e}.b{fill:#e7e5e4;stroke:#a8a29e;stroke-width:1.5}.w{fill:#57534e}
+@media (prefers-color-scheme:dark){.n{stroke:#fb923c}.f{stroke:#9a3412}.h{fill:#fb923c}.g{stroke:#44403c}.p{stroke:#78716c}.b{fill:#292524;stroke:#57534e}.w{fill:#a8a29e}}
 </style>
 <line class="g" x1="8" y1="${GROUND + 2}" x2="232" y2="${GROUND + 2}" stroke-width="2"/>
-${props}${paths}${head}
+${props}${paths}${head}${weights}
 </svg>
 `;
 }
@@ -1412,6 +1424,61 @@ EXERCISES.push(
           anchor: ['hip', 115, 104],
         },
       },
+    ],
+  }
+);
+
+// ---- 负重提踵・跳箱 ------------------------------------------------------
+
+/** 跳箱の箱。上面の高さ（足首の位置）は BOX_TOP - 3 */
+const BOX_TOP = GROUND - 24;
+/** 跳箱の 1 姿勢。全キーで腰をアンカーにして、キー間で基準点が飛ばないようにする */
+const boxJumpPose = (hip, legs, arms, torso = 180) => ({
+  torso,
+  thighN: legs[0],
+  shinN: legs[1],
+  thighF: legs[0],
+  shinF: legs[1],
+  armN: arms[0],
+  foreN: arms[1],
+  armF: arms[0] - 6,
+  foreF: arms[1] - 6,
+  anchor: ['hip', hip[0], hip[1]],
+});
+
+EXERCISES.push(
+  {
+    id: 'weighted-calf-raise',
+    title: '负重提踵（台阶）',
+    weights: true,
+    props: [{ type: 'step', x: 112, w: 70, h: 18 }],
+    keys: [125, 48].map(foot => ({
+      dur: 1,
+      pose: {
+        ...STAND,
+        armN: 0,
+        foreN: 0,
+        armF: 0,
+        foreF: 0,
+        footN: foot,
+        footF: foot,
+        anchor: ['toeN', 124, GROUND - 21],
+      },
+    })),
+  },
+  {
+    id: 'box-jump',
+    title: '跳箱',
+    props: [{ type: 'bench', x: 145, y: BOX_TOP, w: 62 }],
+    keys: [
+      // 地面に立つ → しゃがんで腕を後ろへ → 跳ぶ → 箱の上にしゃがんで着地 → 立つ
+      { dur: 0.5, pose: boxJumpPose([80, 103], [0, 0], [0, 10]) },
+      { dur: 0.35, pose: boxJumpPose([60.5, 127.7], [60, -25], [-60, -40], 150) },
+      { dur: 0.35, pose: boxJumpPose([125, 92], [75, -15], [160, 170], 165) },
+      { dur: 0.5, pose: boxJumpPose([156.5, BOX_TOP - 3 - 57.3], [60, -25], [80, 90], 150) },
+      { dur: 0.7, pose: boxJumpPose([176, BOX_TOP - 3 - 82], [0, 0], [0, 10]) },
+      // 先頭（地面）へ戻る区間は一瞬にして、箱から滑り降りるように見えないようにする
+      { dur: 0.04, pose: boxJumpPose([176, BOX_TOP - 3 - 82], [0, 0], [0, 10]) },
     ],
   }
 );

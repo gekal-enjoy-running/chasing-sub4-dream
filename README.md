@@ -45,8 +45,6 @@ order: 1 # 一覧の並び順
 
 `content/pages/about.md`（关于）と `content/pages/plan.md`（训练计划）。
 
-> 現在の自己紹介はサンプル。実際の内容に置き換えること。
-
 ## 公開
 
 main へ push すると GitHub Actions（`.github/workflows/ci.yml`）が検証 → 書き出し → GitHub Pages 配信を行う。

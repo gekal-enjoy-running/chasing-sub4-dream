@@ -59,4 +59,4 @@
 1. DNS：为 `chasing-sub4-dream.gekal.cn` 添加 CNAME 记录 → `gekal-enjoy-running.github.io`
 2. GitHub 仓库 Settings → Pages → Source 选择 **GitHub Actions**，Custom domain 填写上述域名并启用 HTTPS
 3. 仓库目前是 **Private**：私有仓库使用 GitHub Pages 需要付费计划（Team / Enterprise），否则需改为 Public
-4. 把示例数据（`content/pages/about.md` 等个人信息）替换为真实内容
+4. 关于页面（`content/pages/about.md`）已写入官方成绩，有新比赛时追加

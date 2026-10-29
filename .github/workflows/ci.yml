@@ -1,0 +1,76 @@
+# 型・Lint・テスト・ビルドの検証と、GitHub Pages への配信。
+# 検証はPRでも動く。配信は main への push のときだけ動く。
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # 手動で流したいとき
+  workflow_dispatch:
+
+# 同じブランチへ続けてpushされたら古い実行は打ち切る
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  # プロジェクトページ（https://<user>.github.io/<repo>/）はサブパス配下に置かれる。
+  # 本サイトは独自ドメイン（chasing-sub4-dream.gekal.cn）でルート配信するため空文字。
+  NEXT_PUBLIC_BASE_PATH: ""
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          # 現時点のLTSで検証する。LTSが切り替わったら手動で上げる。
+          node-version: 24
+          cache: npm
+
+      - name: 依存関係をインストール
+        run: npm ci
+
+      # tsc は TypeScript 7（@typescript/native）。TS6 比で数倍速い。
+      - name: 型チェック
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: テスト
+        run: npm test
+
+      - name: 静的書き出し
+        run: npm run build
+
+      # _next/ はアンダースコア始まりのため、Jekyll に無視されると CSS も JS も 404 になる
+      - name: .nojekyll を置く
+        run: touch out/.nojekyll
+
+      - name: 書き出し結果をアップロード
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: out
+
+  deploy:
+    needs: verify
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

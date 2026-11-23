@@ -11,6 +11,7 @@ import remarkGfm from 'remark-gfm';
 import html from 'remark-html';
 import { isCategory, type ExerciseSummary } from './exercises';
 import type { RaceDistance, RaceSummary } from './races';
+import { isZoneKey, type ZoneKey } from './training';
 import { parseDuration } from './time';
 
 const CONTENT_DIR = join(process.cwd(), 'content');
@@ -110,6 +111,54 @@ export async function getExerciseBySlug(slug: string): Promise<Exercise | null> 
 /** 動作アニメーション（public/animations/<slug>.svg）があるか */
 export function hasAnimation(slug: string): boolean {
   return existsSync(join(process.cwd(), 'public', 'animations', `${slug}.svg`));
+}
+
+export type TrainingSummary = {
+  slug: string;
+  title: string;
+  summary: string;
+  /** 使う配速区间（表の行になる） */
+  zones: ZoneKey[];
+  /** 頻度の目安（例: "每周 1 次"） */
+  frequency: string;
+  /** 优势 */
+  benefits: string[];
+  /** 锻炼到的地方 */
+  trains: string[];
+  /** core = 破四の核になる 4 種、supplementary = 補助的な練習 */
+  group: 'core' | 'supplementary';
+  order: number;
+};
+
+export type Training = TrainingSummary & { html: string };
+
+function toTrainingSummary(slug: string, data: Record<string, unknown>): TrainingSummary {
+  const order = Number(data.order);
+  return {
+    slug,
+    title: String(data.title ?? slug),
+    summary: String(data.summary ?? ''),
+    // 区间の書き間違いは表示から黙って落とす（表が壊れるより欠けるほうがよい）
+    zones: toStringList(data.zones).filter(isZoneKey),
+    frequency: String(data.frequency ?? ''),
+    benefits: toStringList(data.benefits),
+    trains: toStringList(data.trains),
+    group: data.group === 'core' ? 'core' : 'supplementary',
+    order: Number.isFinite(order) ? order : 999,
+  };
+}
+
+/** 训练方法の一覧（order 順）。本文は含めない */
+export function getAllTrainings(): TrainingSummary[] {
+  return readMarkdownDir('training')
+    .map(({ slug, data }) => toTrainingSummary(slug, data))
+    .sort((a, b) => a.order - b.order);
+}
+
+export async function getTrainingBySlug(slug: string): Promise<Training | null> {
+  const found = readMarkdownDir('training').find(entry => entry.slug === slug);
+  if (!found) return null;
+  return { ...toTrainingSummary(found.slug, found.data), html: await toHtml(found.content) };
 }
 
 /** content/pages/<name>.md の固定ページ */

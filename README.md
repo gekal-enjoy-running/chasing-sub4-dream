@@ -1,7 +1,7 @@
 # Chasing Sub-4 Dream（全马破四追梦者）
 
 フルマラソン 4 時間切り（サブ4 / 破四）を目指す市民ランナーのサイト。
-大会記録・破四に必要な能力・ペース表・トレーニング指南・動作ライブラリ（動図つき）を、Next.js の静的書き出しで配信する。
+大会記録・破四に必要な能力・训练方法・ペース表・トレーニング指南・動作ライブラリ（動図つき）を、Next.js の静的書き出しで配信する。
 企画の背景とページ構成は [docs/proposal.md](docs/proposal.md)（中国語）を参照。
 
 - 公開 URL: https://chasing-sub4-dream.gekal.cn
@@ -47,6 +47,24 @@ summary: 一覧と description に使う 1〜2 文。
 
 フルマラソンの自己ベスト・破四までの差・記録推移グラフは `result` から自動で計算される。
 URL は `/races/<slug>/`（ファイル名の日付は除く）。
+
+### 训练方法 `content/training/<slug>.md`
+
+```markdown
+---
+title: 乳酸阈值训练（节奏跑）
+summary: 一覧と description に使う 1〜2 文。
+zones: [threshold] # 配速表に出す区间（easy / marathon / threshold / interval / repetition）。無ければ []
+frequency: 每周 1 次
+order: 3
+group: core # core（核心训练）/ supplementary（补充训练）
+benefits: [优势を箇条書きで]
+trains: [锻炼到的地方を箇条書きで]
+---
+```
+
+配速は `src/lib/training.ts` が马拉松完赛时间から換算する（破四目標と、全马 PB からの「当前」の 2 列）。
+概要ページの本文は `content/pages/training.md`。
 
 ### 训练指南 `content/guides/<slug>.md`
 
@@ -96,20 +114,21 @@ main へ push すると GitHub Actions（`.github/workflows/ci.yml`）が検証 
 
 ## ディレクトリ構成
 
-| パス                              | 内容                                                                                                 |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `content/races/`                  | 大会記録（公式記録）・レースレポート                                                                 |
-| `content/guides/`                 | 训练指南（热身・拉伸・力量・技术・恢复）                                                             |
-| `content/exercises/`              | 动作库（热身・拉伸・力量・跑步技术の各動作）                                                         |
-| `content/pages/`                  | 固定ページ（about / plan）                                                                           |
-| `src/app/`                        | ルーティング（`/` `/races/` `/guides/` `/exercises/` `/pace/` `/plan/` `/about/`、sitemap / robots） |
-| `src/components/`                 | Atomic Design（atoms / molecules / organisms）と MUI テーマ（providers）                             |
-| `src/lib/`                        | Markdown 読み込み（`content.ts`）、タイム・ペース換算、大会集計、日付整形とテスト                    |
-| `src/config/site.ts`              | サイト名・URL・目標タイム・ナビゲーションの唯一の定義                                                |
-| `src/config/abilities.ts`         | トップページの「破四需要的能力」カードの内容                                                         |
-| `public/`                         | CNAME、OG 画像、動作アニメーション（`animations/`）                                                  |
-| `docs/proposal.md`                | サイト企画書                                                                                         |
-| `scripts/generate-animations.mjs` | 動作アニメーションの生成スクリプト                                                                   |
+| パス                              | 内容                                                                                                              |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| `content/races/`                  | 大会記録（公式記録）・レースレポート                                                                              |
+| `content/training/`               | 训练方法（核心 4 種＋补充训练）                                                                                   |
+| `content/guides/`                 | 训练指南（热身・拉伸・力量・技术・恢复）                                                                          |
+| `content/exercises/`              | 动作库（热身・拉伸・力量・跑步技术の各動作）                                                                      |
+| `content/pages/`                  | 固定ページ（about / plan）                                                                                        |
+| `src/app/`                        | ルーティング（`/` `/races/` `/training/` `/guides/` `/exercises/` `/pace/` `/plan/` `/about/`、sitemap / robots） |
+| `src/components/`                 | Atomic Design（atoms / molecules / organisms）と MUI テーマ（providers）                                          |
+| `src/lib/`                        | Markdown 読み込み（`content.ts`）、タイム・ペース換算、配速区间、大会集計、日付整形とテスト                       |
+| `src/config/site.ts`              | サイト名・URL・目標タイム・ナビゲーションの唯一の定義                                                             |
+| `src/config/abilities.ts`         | トップページの「破四需要的能力」カードの内容                                                                      |
+| `public/`                         | CNAME、OG 画像、動作アニメーション（`animations/`）                                                               |
+| `docs/proposal.md`                | サイト企画書                                                                                                      |
+| `scripts/generate-animations.mjs` | 動作アニメーションの生成スクリプト                                                                                |
 
 ## 技術スタック
 

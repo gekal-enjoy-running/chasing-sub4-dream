@@ -22,6 +22,7 @@ export const SITE = {
 /** ヘッダ・フッタのナビゲーション。順序がそのまま表示順になる */
 export const NAV = [
   { href: '/races/', label: '比赛' },
+  { href: '/training/', label: '训练' },
   { href: '/guides/', label: '指南' },
   { href: '/exercises/', label: '动作' },
   { href: '/pace/', label: '配速' },

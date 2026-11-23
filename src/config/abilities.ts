@@ -24,7 +24,7 @@ export const ABILITIES: Ability[] = [
     why: '马拉松 99% 的能量来自有氧系统。心肺越强，同样配速下心率越低、越省力。',
     targets: ['最大摄氧量（手表估算）约 45 以上', '6\'30"/km 轻松跑时心率稳定在 Z2'],
     training: '每周 70〜80% 的跑量用轻松跑完成，每周一次 LSD。',
-    link: { href: '/plan/', label: '训练计划' },
+    link: { href: '/training/base-training/', label: '基础有氧训练' },
   },
   {
     key: 'threshold',
@@ -32,7 +32,7 @@ export const ABILITIES: Ability[] = [
     why: '阈值越高，5\'41"/km 的破四配速就越“轻松”，越不容易在后半程堆积疲劳。',
     targets: ['10km 约 52 分钟以内', '半程马拉松约 1:53 以内', '阈值配速约 5\'05"〜5\'15"/km'],
     training: '每周一次节奏跑（20〜40 分钟）或 1000m 间歇。',
-    link: { href: '/plan/', label: '训练计划' },
+    link: { href: '/training/threshold/', label: '乳酸阈值训练' },
   },
   {
     key: 'endurance',
@@ -40,7 +40,7 @@ export const ABILITIES: Ability[] = [
     why: '撞墙多发生在 30km 之后。需要让身体习惯长时间以目标配速输出、并有效利用脂肪供能。',
     targets: ['能以 5\'40"/km 完成 25〜30km 配速跑', '巅峰期周跑量 50〜70km'],
     training: 'LSD 逐步延长到 30km，马拉松配速跑从 10km 拉长到 25km 以上。',
-    link: { href: '/plan/', label: '训练计划' },
+    link: { href: '/training/long-run/', label: '长距离跑' },
   },
   {
     key: 'strength',

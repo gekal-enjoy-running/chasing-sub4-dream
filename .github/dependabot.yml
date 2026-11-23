@@ -1,0 +1,54 @@
+# 依存関係の更新 PR を Dependabot に作らせる。
+# 脆弱性の修正（セキュリティアップデート）はこの設定とは別に、リポジトリ設定で随時作られる。
+version: 2
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:00'
+      timezone: Asia/Tokyo
+    # 公開直後の版は取り下げや不具合が多いため、出てから 7 日（メジャーは 14 日）待つ
+    cooldown:
+      default-days: 7
+      semver-major-days: 14
+    open-pull-requests-limit: 5
+    groups:
+      # next と eslint-config-next は同じ版に揃えないと lint の設定がずれる
+      nextjs:
+        patterns: [next, eslint-config-next]
+      react:
+        patterns: [react, react-dom, '@types/react', '@types/react-dom']
+      mui:
+        patterns: ['@mui/*', '@emotion/*']
+      markdown:
+        patterns: [remark, 'remark-*', gray-matter]
+      lint-format:
+        patterns: [eslint, 'eslint-*', prettier]
+      # 上のどれにも入らない開発用ツールは、マイナー・パッチをまとめて 1 本にする
+      dev-tools:
+        dependency-type: development
+        update-types: [minor, patch]
+    ignore:
+      # TypeScript は npm エイリアスで 7（型検査）と 6（ESLint 用）を併存させている。
+      # Dependabot はエイリアスを正しく扱えないため、手で更新する
+      - dependency-name: typescript
+      - dependency-name: '@typescript/native'
+      # Node の型は CI の Node（24 LTS）に合わせる。LTS を上げるときに手で更新する
+      - dependency-name: '@types/node'
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: '09:00'
+      timezone: Asia/Tokyo
+    cooldown:
+      default-days: 7
+    groups:
+      actions:
+        patterns: ['*']

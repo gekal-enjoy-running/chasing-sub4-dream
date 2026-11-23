@@ -39,6 +39,10 @@ updates:
       # Node の型は CI の Node（24 LTS）に合わせる。LTS を上げるときに手で更新する
       - dependency-name: '@types/node'
         update-types: [version-update:semver-major]
+      # eslint-config-next が使う eslint-plugin-import などが ESLint 10 に未対応（peer は ^9 まで）。
+      # 対応版が出たら、この ignore を外して手で上げる
+      - dependency-name: eslint
+        update-types: [version-update:semver-major]
 
   - package-ecosystem: github-actions
     directory: /
